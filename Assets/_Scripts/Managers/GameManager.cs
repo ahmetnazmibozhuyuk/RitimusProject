@@ -16,7 +16,7 @@ namespace RitimUS.Managers
         private UIManager _uiManager;
 
         [SerializeField] private RewardType[] rewards = new RewardType[7];
-        [SerializeField]private AngleLimit[] _angleLimits;
+        private AngleLimit[] _angleLimits;
 
         private readonly int _segmentCount = 7;
         private readonly float _startAngle = 0;
@@ -65,9 +65,6 @@ namespace RitimUS.Managers
                     return;
                 }
             }
-
-
-
         }
     }
     [System.Serializable]
@@ -78,7 +75,6 @@ namespace RitimUS.Managers
         public float RewardValue;
         [HideInInspector]public int RewardAmount;
     }
-    [System.Serializable]
     public struct AngleLimit
     {
         public float minimumAngle;
