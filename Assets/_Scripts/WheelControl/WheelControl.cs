@@ -13,9 +13,14 @@ namespace RitimUS.Wheel
             } }
         public void StartSpinning()
         {
-            DOTween.To(() => _currentTurnAngle, x => _currentTurnAngle = x, 2000, 6).
+            DOTween.To(() => _currentTurnAngle, x => _currentTurnAngle = x, 2000+Random.Range(0f,360f), 6+Random.Range(0f,5f)).
                 SetEase(Ease.InOutCubic).
                 OnUpdate(() => transform.rotation = Quaternion.Euler(0, 0, _currentTurnAngle)).OnComplete(()=>GameManager.Instance.GetResult(_finalScore));
+        }
+        public void RestartWheel()
+        {
+            transform.rotation = Quaternion.identity;
+            _currentTurnAngle = 0;
         }
     }
 }

@@ -13,9 +13,10 @@ namespace RitimUS.Managers
 
         private float _finalScore;
 
+        private UIManager _uiManager;
 
         [SerializeField] private RewardType[] rewards = new RewardType[7];
-        private AngleLimit[] _angleLimits;
+        [SerializeField]private AngleLimit[] _angleLimits;
 
         private readonly int _segmentCount = 7;
         private readonly float _startAngle = 0;
@@ -24,6 +25,7 @@ namespace RitimUS.Managers
         protected override void Awake()
         {
             base.Awake();
+            _uiManager = GetComponent<UIManager>();
             _wheelControl = wheelObject.GetComponent<WheelControl>();
         }
         private void Start()
@@ -42,12 +44,30 @@ namespace RitimUS.Managers
         public void SpinWheel()
         {
             _wheelControl.StartSpinning();
+            _uiManager.SpinningPhaseStarted();
+        }
+        public void RestartWheel()
+        {
+            _wheelControl.RestartWheel();
+            _uiManager.RestartGame();
         }
         public void GetResult(float finalScore)
         {
             _finalScore = finalScore;
 
-            Debug.Log("current angle %360 is " + _finalScore);
+            for(int i = 0; i < _angleLimits.Length; i++)
+            {
+                if(finalScore >= _angleLimits[i].minimumAngle && finalScore <= _angleLimits[i].maximumAngle)
+                {
+                    Debug.Log("current angle %360 is " + _finalScore);
+                    Debug.Log("reward name = " + rewards[i].RewardName);
+                    _uiManager.ResultPhase();
+                    return;
+                }
+            }
+
+
+
         }
     }
     [System.Serializable]
@@ -56,8 +76,9 @@ namespace RitimUS.Managers
         public Image RewardImage;
         public string RewardName;
         public float RewardValue;
-        public int RewardAmount;
+        [HideInInspector]public int RewardAmount;
     }
+    [System.Serializable]
     public struct AngleLimit
     {
         public float minimumAngle;
