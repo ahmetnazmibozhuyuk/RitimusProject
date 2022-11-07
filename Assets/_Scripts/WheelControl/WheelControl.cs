@@ -1,22 +1,21 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+using DG.Tweening;
+using RitimUS.Managers;
 
 namespace RitimUS.Wheel
 {
     public class WheelControl : MonoBehaviour
     {
-        [SerializeField] private RewardType[] rewards = new RewardType[7];
-
-
-
-    }
-    public struct RewardType
-    {
-        public Image RewardImage;
-        public string RewardName;
-        public float RewardValue;
-        public int RewardAmount;
+        private float _currentTurnAngle;
+        private float _finalScore { get
+            {
+                 return transform.rotation.eulerAngles.z % 360;
+            } }
+        public void StartSpinning()
+        {
+            DOTween.To(() => _currentTurnAngle, x => _currentTurnAngle = x, 2000, 6).
+                SetEase(Ease.InOutCubic).
+                OnUpdate(() => transform.rotation = Quaternion.Euler(0, 0, _currentTurnAngle)).OnComplete(()=>GameManager.Instance.GetResult(_finalScore));
+        }
     }
 }
