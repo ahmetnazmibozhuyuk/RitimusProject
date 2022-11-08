@@ -4,23 +4,23 @@ using UnityEngine.UI;
 
 namespace RitimUS.Managers
 {
+    [RequireComponent(typeof(UIManager))]
     public class GameManager : Singleton<GameManager>
     {
+        #region Wheel Related
         [SerializeField] private GameObject wheelObject;
         private WheelControl _wheelControl;
         public GameObject WheelObject { get { return wheelObject; } }
         public WheelControl WheelControl { get { return _wheelControl; } }
-
         private float _finalScore;
-
-        private UIManager _uiManager;
 
         [SerializeField] private RewardType[] rewards = new RewardType[7];
         private AngleLimit[] _angleLimits;
-
         private readonly int _segmentCount = 7;
         private readonly float _startAngle = 0;
+        #endregion
 
+        private UIManager _uiManager;
 
         protected override void Awake()
         {
@@ -32,6 +32,11 @@ namespace RitimUS.Managers
         {
             InitializeAngles();
         }
+
+
+
+
+        #region Wheel Methods
         private void InitializeAngles()
         {
             _angleLimits = new AngleLimit[rewards.Length];
@@ -66,7 +71,9 @@ namespace RitimUS.Managers
                 }
             }
         }
+        #endregion
     }
+    #region Wheel Structs
     [System.Serializable]
     public struct RewardType
     {
@@ -80,4 +87,5 @@ namespace RitimUS.Managers
         public float minimumAngle;
         public float maximumAngle;
     }
+    #endregion
 }
