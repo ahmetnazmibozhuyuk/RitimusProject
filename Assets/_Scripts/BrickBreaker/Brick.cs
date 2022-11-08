@@ -2,20 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace RitimUS
+namespace RitimUS.BrickBreaker
 {
-    public class Brick : MonoBehaviour
+    public class Brick : MonoBehaviour, IBallHit
     {
-        // Start is called before the first frame update
-        void Start()
+        // o an ne renkse o renk particle oluþturacak
+        public void HitAction()
         {
-        
-        }
 
-        // Update is called once per frame
-        void Update()
-        {
-        
         }
     }
 }

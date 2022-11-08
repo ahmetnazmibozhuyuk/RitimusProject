@@ -10,15 +10,25 @@ namespace RitimUS.BrickBreaker
     {
         private readonly float _deathCheckInterval = 2;
         private float _deathCounter;
-        public void HitAction()
+
+        private Rigidbody _rigidbody;
+
+        private void Awake()
         {
-            Debug.Log("ball hit");
+            _rigidbody = GetComponent<Rigidbody>();
+        }
+        private void Start()
+        {
+            _rigidbody.velocity = new Vector3(5, 5, 0);
         }
         private void Update()
         {
             CheckIfAlive();
         }
-
+        public void HitAction()
+        {
+            Debug.Log("ball hit");
+        }
         private void CheckIfAlive()
         {
             _deathCounter += Time.deltaTime;
