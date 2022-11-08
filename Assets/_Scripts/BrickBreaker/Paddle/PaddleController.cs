@@ -1,3 +1,4 @@
+using RitimUS.Managers;
 using UnityEngine;
 
 namespace RitimUS.BrickBreaker
@@ -25,6 +26,7 @@ namespace RitimUS.BrickBreaker
         {
             if (Input.GetMouseButtonDown(0))
             {
+                StartGame();
                 _hitDownPositionx = Input.mousePosition.x;
             }
             else if (Input.GetMouseButton(0))
@@ -44,6 +46,13 @@ namespace RitimUS.BrickBreaker
                 Mathf.Clamp(transform.position.x + _offsetx * Time.deltaTime * maxControlSpeed, -horizontalClampLimit, horizontalClampLimit),
                 transform.position.y,
                 transform.position.z));
+        }
+        private void StartGame()
+        {
+            if(GameStateHandler.CurrentState == GameState.GameAwaitingStart)
+            {
+                GameStateHandler.ChangeState(GameState.GameStarted);
+            }
         }
 
     }
