@@ -1,8 +1,8 @@
 using UnityEngine;
 using DG.Tweening;
-using RitimUS.Managers;
+using RitimUS.WheelGame.Managers;
 
-namespace RitimUS.Wheel
+namespace RitimUS.WheelGame.Wheel
 {
     public class WheelControl : MonoBehaviour
     {

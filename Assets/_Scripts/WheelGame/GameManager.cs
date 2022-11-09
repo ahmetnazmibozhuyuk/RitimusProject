@@ -1,8 +1,8 @@
 using UnityEngine;
-using RitimUS.Wheel;
+using RitimUS.WheelGame.Wheel;
 using UnityEngine.UI;
 
-namespace RitimUS.Managers
+namespace RitimUS.WheelGame.Managers
 {
     [RequireComponent(typeof(UIManager))]
     public class GameManager : Singleton<GameManager>
@@ -32,9 +32,6 @@ namespace RitimUS.Managers
         {
             InitializeAngles();
         }
-
-
-
 
         #region Wheel Methods
         private void InitializeAngles()

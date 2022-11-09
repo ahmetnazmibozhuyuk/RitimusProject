@@ -1,4 +1,3 @@
-using RitimUS.Managers;
 using UnityEngine;
 
 namespace RitimUS.BrickBreaker

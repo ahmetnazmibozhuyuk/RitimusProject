@@ -1,6 +1,4 @@
-using RitimUS.Managers;
-using System.Collections;
-using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 namespace RitimUS.BrickBreaker.Managers
@@ -9,6 +7,8 @@ namespace RitimUS.BrickBreaker.Managers
     {
         [SerializeField] private GameObject playAgainButton;
         [SerializeField] private GameObject quitButton;
+
+        [SerializeField] private TextMeshProUGUI scoreText;
         private void OnEnable()
         {
             GameStateHandler.OnGameAwaitingStartState += GameAwaitingStart;
@@ -35,6 +35,10 @@ namespace RitimUS.BrickBreaker.Managers
         {
             playAgainButton.SetActive(true);
             quitButton.SetActive(true);
+        }
+        public void SetScore(int score)
+        {
+            scoreText.SetText("Score: " + score);
         }
         public void RetryGame()
         {

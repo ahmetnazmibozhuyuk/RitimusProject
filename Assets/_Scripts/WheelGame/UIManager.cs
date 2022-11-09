@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace RitimUS.Managers
+namespace RitimUS.WheelGame.Managers
 {
     public class UIManager : MonoBehaviour
     {

@@ -6,7 +6,7 @@ using RitimUS.BrickBreaker.Effects;
 
 namespace RitimUS.BrickBreaker
 {
-    [RequireComponent(typeof(Rigidbody),typeof(SphereCollider))]
+    [RequireComponent(typeof(Rigidbody), typeof(SphereCollider))]
     public class BreakerBall : MonoBehaviour, IPaddleHit
     {
         private readonly float _deathCheckInterval = 2;
@@ -20,13 +20,15 @@ namespace RitimUS.BrickBreaker
         private Color _ballColor;
 
         private WaitForSeconds _particleDespawnDelay = new WaitForSeconds(1);
+
+        private Vector3 _particleAwaitPosition = new Vector3(0, -5, 0);
         private void Awake()
         {
             _rigidbody = GetComponent<Rigidbody>();
             _spriteRenderer = GetComponent<SpriteRenderer>();
             _initialPosition = transform.position;
 
-    
+
         }
         private void Start()
         {
@@ -49,7 +51,7 @@ namespace RitimUS.BrickBreaker
         {
             GameStateHandler.OnGameStartedState += StartBall;
             GameStateHandler.OnGameAwaitingStartState += RepositionBall;
-            GameStateHandler.OnGameWonState+= ()=>_rigidbody.velocity = Vector3.zero;
+            GameStateHandler.OnGameWonState += () => _rigidbody.velocity = Vector3.zero;
         }
         private void OnDisable()
         {
@@ -75,16 +77,16 @@ namespace RitimUS.BrickBreaker
         }
         private void OnCollisionEnter(Collision collision)
         {
-            StartCoroutine(Co_SpawnParticle(GameManager.Instance.SparkParticle,transform.position));
+            StartCoroutine(Co_SpawnParticle(GameManager.Instance.SparkParticle, transform.position));
             if (collision.gameObject.GetComponent<IBrickHit>() == null) return;
             IBrickHit brickHit = collision.gameObject.GetComponent<IBrickHit>();
-            if(brickHit.ColorType != _ballColor)
+            if (brickHit.ColorType != _ballColor)
             {
                 AssignBallColor(brickHit.ColorType);
                 StartCoroutine(Co_SpawnSplashParticle());
                 return;
             }
-            StartCoroutine(Co_SpawnParticle(GameManager.Instance.BrickBreakParticle,collision.transform.position));
+            StartCoroutine(Co_SpawnParticle(GameManager.Instance.BrickBreakParticle, collision.transform.position));
             brickHit.HitAction();
         }
         private void CheckIfAlive()
@@ -104,16 +106,19 @@ namespace RitimUS.BrickBreaker
         }
         private IEnumerator Co_SpawnSplashParticle()
         {
-            GameObject spawnedParticleObject = ObjectPool.Spawn(GameManager.Instance.SplashParticle,transform.position,Quaternion.identity);
+            GameObject spawnedParticleObject = ObjectPool.Spawn(GameManager.Instance.SplashParticle, transform.position, Quaternion.identity);
             spawnedParticleObject.GetComponent<SplashEffect>().SetColor(_ballColor);
 
             yield return _particleDespawnDelay;
+            spawnedParticleObject.transform.position = _particleAwaitPosition;
             ObjectPool.Despawn(spawnedParticleObject);
         }
-        private IEnumerator Co_SpawnParticle(GameObject particleToSpawn,Vector3 spawnPosition)
+        private IEnumerator Co_SpawnParticle(GameObject particleToSpawn, Vector3 spawnPosition)
         {
             GameObject spawnedParticleObject = ObjectPool.Spawn(particleToSpawn, spawnPosition, Quaternion.identity);
+
             yield return _particleDespawnDelay;
+            spawnedParticleObject.transform.position = _particleAwaitPosition;
             ObjectPool.Despawn(spawnedParticleObject);
         }
         public void HitAction(Vector3 direction)

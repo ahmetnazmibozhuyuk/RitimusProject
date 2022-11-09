@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace RitimUS
+namespace RitimUS.BrickBreaker
 {
     public static class GameStateHandler
     {
@@ -44,6 +44,9 @@ namespace RitimUS
         GameWon = 3,
         GameLost = 4,
     }
+}
+namespace RitimUS
+{
     public abstract class Singleton<T> : MonoBehaviour where T : Component
     {
         public static T Instance { get; private set; }
