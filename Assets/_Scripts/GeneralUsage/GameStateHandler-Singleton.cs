@@ -9,6 +9,7 @@ namespace RitimUS.BrickBreaker
 
         public static event Action OnGameAwaitingStartState;
         public static event Action OnGameStartedState;
+        public static event Action OnNewLifeStartedState;
         public static event Action OnGameWonState;
         public static event Action OnGameLostState;
 
@@ -24,6 +25,9 @@ namespace RitimUS.BrickBreaker
                     break;
                 case GameState.GameStarted:
                     OnGameStartedState?.Invoke();
+                    break;
+                case GameState.NewLifeStarted:
+                    OnNewLifeStartedState?.Invoke();
                     break;
                 case GameState.GameWon:
                     OnGameWonState?.Invoke();
@@ -41,8 +45,9 @@ namespace RitimUS.BrickBreaker
         GamePreStart = 0,
         GameAwaitingStart = 1,
         GameStarted = 2,
-        GameWon = 3,
-        GameLost = 4,
+        NewLifeStarted = 3,
+        GameWon = 4,
+        GameLost = 5,
     }
 }
 namespace RitimUS

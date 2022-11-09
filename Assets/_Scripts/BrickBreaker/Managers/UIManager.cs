@@ -9,6 +9,10 @@ namespace RitimUS.BrickBreaker.Managers
         [SerializeField] private GameObject quitButton;
 
         [SerializeField] private TextMeshProUGUI scoreText;
+        [SerializeField] private TextMeshProUGUI livesText;
+
+        [SerializeField] private GameObject wonText;
+        [SerializeField] private GameObject lostText;
         private void OnEnable()
         {
             GameStateHandler.OnGameAwaitingStartState += GameAwaitingStart;
@@ -23,16 +27,20 @@ namespace RitimUS.BrickBreaker.Managers
         }
         public void GameAwaitingStart()
         {
+            wonText.SetActive(false);
+            lostText.SetActive(false);
             playAgainButton.SetActive(false);
             quitButton.SetActive(false);
         }
         public void GameWon()
         {
+            wonText.SetActive(true);
             playAgainButton.SetActive(true);
             quitButton.SetActive(true);
         }
         public void GameLost()
         {
+            lostText.SetActive(true);
             playAgainButton.SetActive(true);
             quitButton.SetActive(true);
         }
@@ -40,9 +48,9 @@ namespace RitimUS.BrickBreaker.Managers
         {
             scoreText.SetText("Score: " + score);
         }
-        public void RetryGame()
+        public void SetLives(int livesCount)
         {
-
+            livesText.SetText("Lives: " + livesCount);
         }
     }
 }

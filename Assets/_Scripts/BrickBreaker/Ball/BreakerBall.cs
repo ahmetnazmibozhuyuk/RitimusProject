@@ -27,8 +27,6 @@ namespace RitimUS.BrickBreaker
             _rigidbody = GetComponent<Rigidbody>();
             _spriteRenderer = GetComponent<SpriteRenderer>();
             _initialPosition = transform.position;
-
-
         }
         private void Start()
         {
@@ -50,13 +48,20 @@ namespace RitimUS.BrickBreaker
         private void OnEnable()
         {
             GameStateHandler.OnGameStartedState += StartBall;
+            GameStateHandler.OnNewLifeStartedState += ResetBall;
             GameStateHandler.OnGameAwaitingStartState += RepositionBall;
             GameStateHandler.OnGameWonState += () => _rigidbody.velocity = Vector3.zero;
         }
         private void OnDisable()
         {
             GameStateHandler.OnGameStartedState -= StartBall;
+            GameStateHandler.OnNewLifeStartedState -= ResetBall;
             GameStateHandler.OnGameAwaitingStartState -= RepositionBall;
+        }
+        private void ResetBall()
+        {
+            transform.position = _initialPosition;
+            _rigidbody.velocity = Vector3.zero;
         }
         private void Update()
         {
@@ -94,16 +99,18 @@ namespace RitimUS.BrickBreaker
             _deathCounter += Time.deltaTime;
             if (_deathCounter >= _deathCheckInterval)
             {
-
-
                 _deathCounter = 0;
                 if (transform.position.y < -5)
                 {
-                    GameStateHandler.ChangeState(GameState.GameLost);
-                    _rigidbody.velocity = Vector3.zero;
+                    GameManager.Instance.LivesLost();
                 }
             }
         }
+        public void HitAction(Vector3 direction)
+        {
+            _rigidbody.velocity = direction;
+        }
+        #region Particle Methods
         private IEnumerator Co_SpawnSplashParticle()
         {
             GameObject spawnedParticleObject = ObjectPool.Spawn(GameManager.Instance.SplashParticle, transform.position, Quaternion.identity);
@@ -121,9 +128,6 @@ namespace RitimUS.BrickBreaker
             spawnedParticleObject.transform.position = _particleAwaitPosition;
             ObjectPool.Despawn(spawnedParticleObject);
         }
-        public void HitAction(Vector3 direction)
-        {
-            _rigidbody.velocity = direction;
-        }
+        #endregion
     }
 }
