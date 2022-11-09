@@ -11,6 +11,16 @@ namespace RitimUS.Managers
         private int _currentScore;
 
         private int _currentBrickCount;
+
+        [SerializeField] private Color[] switchColors;
+        public Color[] SwitchColors { get { return switchColors; } }
+
+        public GameObject SplashParticle { get { return splashParticle; } }
+        public GameObject BrickBreakParticle { get { return brickBreakParticle; } }
+        public GameObject SparkParticle { get { return sparkParticle; } }
+        [SerializeField] private GameObject splashParticle;
+        [SerializeField] private GameObject brickBreakParticle;
+        [SerializeField] private GameObject sparkParticle;
         protected override void Awake()
         {
             base.Awake();

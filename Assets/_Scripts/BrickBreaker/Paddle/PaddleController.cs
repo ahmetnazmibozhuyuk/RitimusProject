@@ -37,7 +37,6 @@ namespace RitimUS.BrickBreaker
             else if (Input.GetMouseButtonUp(0))
             {
                 _offsetx = 0;
-
             }
         }
         private void AssignMovement()

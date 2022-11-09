@@ -5,7 +5,23 @@ namespace RitimUS.BrickBreaker
 {
     public class Brick : MonoBehaviour, IBrickHit
     {
-        // o an ne renkse o renk particle oluþturacak
+        public Color ColorType { get; set; }
+        private SpriteRenderer _spriteRenderer;
+
+        private void Awake()
+        {
+            _spriteRenderer= GetComponent<SpriteRenderer>();
+        }
+        private void Start()
+        {
+            AssignBallColor(BreakerManager.Instance.SwitchColors[Random.Range(0, BreakerManager.Instance.SwitchColors.Length)]);
+        }
+        private void AssignBallColor(Color newColor)
+        {
+            ColorType = newColor;
+            _spriteRenderer.color = ColorType;
+        }
+
         public void HitAction()
         {
             Invoke(nameof(DestroyBrick), 0.05f);
@@ -18,6 +34,9 @@ namespace RitimUS.BrickBreaker
     }
     public interface IBrickHit
     {
+        public Color ColorType { get; set; }
         public void HitAction();
     }
+
+    
 }

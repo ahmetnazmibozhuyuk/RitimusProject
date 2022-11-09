@@ -22,8 +22,6 @@ namespace RitimUS.BrickBreaker
         }
     }
 
-
-
     public interface IPaddleHit
     {
         public void HitAction(Vector3 direction);
