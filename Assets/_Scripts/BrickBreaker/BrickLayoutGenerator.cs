@@ -1,9 +1,9 @@
-using RitimUS.Managers;
+using RitimUS.BrickBreaker.Managers;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace RitimUS
+namespace RitimUS.BrickBreaker
 {
     public class BrickLayoutGenerator : MonoBehaviour
     {
@@ -25,7 +25,7 @@ namespace RitimUS
         private void InitializeLevel()
         {
             GenerateLevel();
-            BreakerManager.Instance.InitializeGame(_bricksList.Count);
+            GameManager.Instance.InitializeGame(_bricksList.Count);
         }
         private void GenerateLevel()
         {

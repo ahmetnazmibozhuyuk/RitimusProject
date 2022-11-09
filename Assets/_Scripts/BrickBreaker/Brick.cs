@@ -1,4 +1,4 @@
-using RitimUS.Managers;
+using RitimUS.BrickBreaker.Managers;
 using UnityEngine;
 
 namespace RitimUS.BrickBreaker
@@ -14,7 +14,7 @@ namespace RitimUS.BrickBreaker
         }
         private void Start()
         {
-            AssignBallColor(BreakerManager.Instance.SwitchColors[Random.Range(0, BreakerManager.Instance.SwitchColors.Length)]);
+            AssignBallColor(GameManager.Instance.SwitchColors[Random.Range(0, GameManager.Instance.SwitchColors.Length)]);
         }
         private void AssignBallColor(Color newColor)
         {
@@ -28,7 +28,7 @@ namespace RitimUS.BrickBreaker
         }
         private void DestroyBrick()
         {
-            BreakerManager.Instance.BrickHit();
+            GameManager.Instance.BrickHit();
             Destroy(gameObject);
         }
     }

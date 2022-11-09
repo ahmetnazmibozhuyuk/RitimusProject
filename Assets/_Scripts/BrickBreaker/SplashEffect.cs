@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace RitimUS
+namespace RitimUS.BrickBreaker.Effects
 {
     public class SplashEffect : MonoBehaviour
     {

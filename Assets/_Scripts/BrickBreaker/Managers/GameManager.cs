@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace RitimUS.Managers
+namespace RitimUS.BrickBreaker.Managers
 {
-    [RequireComponent(typeof(BreakerUIManager))]
-    public class BreakerManager : Singleton<BreakerManager>
+    [RequireComponent(typeof(UIManager))]
+    public class GameManager : Singleton<GameManager>
     {
         [SerializeField] private int singleBrickPoint = 10;
         private int _currentScore;

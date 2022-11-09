@@ -3,9 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace RitimUS
+namespace RitimUS.BrickBreaker.Managers
 {
-    public class BreakerUIManager : MonoBehaviour
+    public class UIManager : MonoBehaviour
     {
         [SerializeField] private GameObject playAgainButton;
         [SerializeField] private GameObject quitButton;

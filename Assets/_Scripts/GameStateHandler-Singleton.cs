@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace RitimUS.Managers
+namespace RitimUS
 {
     public static class GameStateHandler
     {

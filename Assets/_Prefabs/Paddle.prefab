@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2977c6ee78ed2d42bda6879be179216, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxControlSpeed: 5
+  maxControlSpeed: 2
   horizontalClampLimit: 2.6
 --- !u!114 &170421492107073080
 MonoBehaviour:

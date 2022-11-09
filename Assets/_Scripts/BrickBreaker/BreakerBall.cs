@@ -1,7 +1,8 @@
-using RitimUS.Managers;
+using RitimUS.BrickBreaker.Managers;
 using System.Collections;
 using UnityEngine;
 using ObjectPooling;
+using RitimUS.BrickBreaker.Effects;
 
 namespace RitimUS.BrickBreaker
 {
@@ -29,7 +30,7 @@ namespace RitimUS.BrickBreaker
         }
         private void Start()
         {
-            AssignBallColor(BreakerManager.Instance.SwitchColors[Random.Range(0, BreakerManager.Instance.SwitchColors.Length)]);
+            AssignBallColor(GameManager.Instance.SwitchColors[Random.Range(0, GameManager.Instance.SwitchColors.Length)]);
         }
         private void AssignBallColor(Color newColor)
         {
@@ -74,7 +75,7 @@ namespace RitimUS.BrickBreaker
         }
         private void OnCollisionEnter(Collision collision)
         {
-            StartCoroutine(Co_SpawnParticle(BreakerManager.Instance.SparkParticle,transform.position));
+            StartCoroutine(Co_SpawnParticle(GameManager.Instance.SparkParticle,transform.position));
             if (collision.gameObject.GetComponent<IBrickHit>() == null) return;
             IBrickHit brickHit = collision.gameObject.GetComponent<IBrickHit>();
             if(brickHit.ColorType != _ballColor)
@@ -83,7 +84,7 @@ namespace RitimUS.BrickBreaker
                 StartCoroutine(Co_SpawnSplashParticle());
                 return;
             }
-            StartCoroutine(Co_SpawnParticle(BreakerManager.Instance.BrickBreakParticle,collision.transform.position));
+            StartCoroutine(Co_SpawnParticle(GameManager.Instance.BrickBreakParticle,collision.transform.position));
             brickHit.HitAction();
         }
         private void CheckIfAlive()
@@ -103,7 +104,7 @@ namespace RitimUS.BrickBreaker
         }
         private IEnumerator Co_SpawnSplashParticle()
         {
-            GameObject spawnedParticleObject = ObjectPool.Spawn(BreakerManager.Instance.SplashParticle,transform.position,Quaternion.identity);
+            GameObject spawnedParticleObject = ObjectPool.Spawn(GameManager.Instance.SplashParticle,transform.position,Quaternion.identity);
             spawnedParticleObject.GetComponent<SplashEffect>().SetColor(_ballColor);
 
             yield return _particleDespawnDelay;
