@@ -20,8 +20,10 @@ namespace RitimUS.BrickBreaker
 
         private void Update()
         {
-            SetControl();
+            SetTouchControl();
+
 #if UNITY_EDITOR
+            //SetControl();
             SetKeyboardControl();
 #endif
         }
@@ -29,6 +31,29 @@ namespace RitimUS.BrickBreaker
         {
             AssignMovement(_offsetx * Time.deltaTime * maxControlSpeed);
         }
+
+        private void SetTouchControl()
+        {
+            if (Input.touchCount <= 0) return;
+
+            Touch touch = Input.GetTouch(0);
+
+            if (touch.phase == TouchPhase.Began)
+            {
+                StartGame();
+                _hitDownPositionx = touch.position.x;
+            }
+            else if (touch.phase == TouchPhase.Moved)
+            {
+                _offsetx = touch.position.x - _hitDownPositionx;
+                _hitDownPositionx = touch.position.x;
+            }
+            else if (touch.phase == TouchPhase.Ended)
+            {
+                _offsetx = 0;
+            }
+        }
+#if UNITY_EDITOR
         private void SetControl()
         {
             if (Input.GetMouseButtonDown(0))
@@ -46,7 +71,6 @@ namespace RitimUS.BrickBreaker
                 _offsetx = 0;
             }
         }
-#if UNITY_EDITOR
         private void SetKeyboardControl()
         {
             if (_leftInput)

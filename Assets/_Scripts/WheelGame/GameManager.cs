@@ -1,6 +1,8 @@
 using UnityEngine;
 using RitimUS.WheelGame.Wheel;
 using UnityEngine.UI;
+using DG.Tweening;
+using TMPro;
 
 namespace RitimUS.WheelGame.Managers
 {
@@ -20,6 +22,12 @@ namespace RitimUS.WheelGame.Managers
         private readonly float _startAngle = 0;
         #endregion
 
+        [SerializeField] private GameManager rewardParent;
+        [SerializeField] private Sprite rewardSprite;
+        [SerializeField] private TextMeshProUGUI rewardNameText;
+        [SerializeField] private TextMeshProUGUI rewardAmountText;
+        private Sprite _rewardSprite;
+
         private UIManager _uiManager;
 
         protected override void Awake()
@@ -31,6 +39,11 @@ namespace RitimUS.WheelGame.Managers
         private void Start()
         {
             InitializeAngles();
+        }
+        private void GiveReward(Sprite rewardSprite)
+        {
+            _rewardSprite = rewardSprite;
+
         }
 
         #region Wheel Methods
@@ -74,7 +87,7 @@ namespace RitimUS.WheelGame.Managers
     [System.Serializable]
     public struct RewardType
     {
-        public Image RewardImage;
+        public Sprite RewardImage;
         public string RewardName;
         public float RewardValue;
         [HideInInspector]public int RewardAmount;
