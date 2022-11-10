@@ -1,3 +1,5 @@
+using ObjectPooling;
+using RitimUS.BrickBreaker.Effects;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -8,6 +10,8 @@ namespace RitimUS.BrickBreaker.Managers
     [RequireComponent(typeof(UIManager))]
     public class GameManager : Singleton<GameManager>
     {
+        public GameMode MainGameMode { get { return mainGameMode; } }
+        [SerializeField] private GameMode mainGameMode;
         [SerializeField] private int singleBrickPoint = 10;
         private int _currentScore;
 
@@ -19,7 +23,7 @@ namespace RitimUS.BrickBreaker.Managers
         [SerializeField] private Color[] switchColors;
         private UIManager _uiManager;
         public Color[] SwitchColors { get { return switchColors; } }
-
+        private WaitForSeconds _particleDespawnDelay = new WaitForSeconds(1);
 
         #region Particles
         public GameObject SplashParticle { get { return splashParticle; } }
@@ -42,11 +46,16 @@ namespace RitimUS.BrickBreaker.Managers
         }
         private void OnEnable()
         {
-            GameStateHandler.OnGameAwaitingStartState += RestoreLives;
+            GameStateHandler.OnGameAwaitingStartState += GameAwaitingStart;
         }
         private void OnDisable()
         {
-            GameStateHandler.OnGameAwaitingStartState -= RestoreLives;
+            GameStateHandler.OnGameAwaitingStartState -= GameAwaitingStart;
+        }
+        private void GameAwaitingStart()
+        {
+            RestoreLives();
+            ResetScore();
         }
         private void RestoreLives()
         {
@@ -70,6 +79,11 @@ namespace RitimUS.BrickBreaker.Managers
             _currentScore += scoreToAdd;
             _uiManager.SetScore(_currentScore);
         }
+        private void ResetScore()
+        {
+            _currentScore = 0;
+            _uiManager.SetScore(_currentScore);
+        }
         public void LivesLost()
         {
             if (_currentLives <= 0)
@@ -90,6 +104,36 @@ namespace RitimUS.BrickBreaker.Managers
                 GameStateHandler.ChangeState(GameState.GameWon);
             }
         }
+
+        #region Particle Methods
+        private IEnumerator Co_SpawnSplashParticle(Color colorToChange, Vector3 spawnPosition)
+        {
+            GameObject spawnedParticleObject = ObjectPool.Spawn(SplashParticle, spawnPosition, Quaternion.identity);
+            spawnedParticleObject.GetComponent<SplashEffect>().SetColor(colorToChange);
+
+            yield return _particleDespawnDelay;
+
+            ObjectPool.Despawn(spawnedParticleObject);
+        }
+        private IEnumerator Co_SpawnParticle(GameObject particleToSpawn, Vector3 spawnPosition)
+        {
+            GameObject spawnedParticleObject = ObjectPool.Spawn(particleToSpawn, spawnPosition, Quaternion.identity);
+
+            yield return _particleDespawnDelay;
+
+            ObjectPool.Despawn(spawnedParticleObject);
+        }
+        public void SpawnSplash(Color colorToChange, Vector3 spawnPosition)
+        {
+            StartCoroutine(Co_SpawnSplashParticle(colorToChange,spawnPosition));
+        }
+        public void SpawnParticle(GameObject particleToSpawn, Vector3 spawnPosition)
+        {
+            StartCoroutine(Co_SpawnParticle(particleToSpawn, spawnPosition));
+        }
+        #endregion
+
+
         public void RestartGame()
         {
             UpdateScore(0);
@@ -101,4 +145,5 @@ namespace RitimUS.BrickBreaker.Managers
         }
 
     }
+    public enum GameMode { BallChange = 0, BrickChange = 1}
 }
