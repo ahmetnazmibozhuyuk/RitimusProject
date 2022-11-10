@@ -49,6 +49,7 @@ namespace RitimUS.BrickBreaker
         {
             GameStateHandler.OnGameStartedState += StartBall;
             GameStateHandler.OnNewLifeStartedState += ResetBall;
+            GameStateHandler.OnGameLostState += ResetBall;
             GameStateHandler.OnGameAwaitingStartState += RepositionBall;
             GameStateHandler.OnGameWonState += () => _rigidbody.velocity = Vector3.zero;
         }
@@ -56,6 +57,7 @@ namespace RitimUS.BrickBreaker
         {
             GameStateHandler.OnGameStartedState -= StartBall;
             GameStateHandler.OnNewLifeStartedState -= ResetBall;
+            GameStateHandler.OnGameLostState -= ResetBall;
             GameStateHandler.OnGameAwaitingStartState -= RepositionBall;
         }
         private void ResetBall()

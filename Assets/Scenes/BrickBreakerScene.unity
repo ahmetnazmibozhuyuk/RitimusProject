@@ -1686,6 +1686,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   singleBrickPoint: 10
+  maxLives: 1
   switchColors:
   - {r: 0.8867924, g: 0.09620863, b: 0.09620863, a: 1}
   - {r: 0.12388753, g: 0.9056604, b: 0.12388753, a: 1}

@@ -38,7 +38,20 @@ namespace RitimUS.BrickBreaker.Managers
         private void Start()
         {
             GameStateHandler.ChangeState(GameState.GameAwaitingStart);
+
+        }
+        private void OnEnable()
+        {
+            GameStateHandler.OnGameAwaitingStartState += RestoreLives;
+        }
+        private void OnDisable()
+        {
+            GameStateHandler.OnGameAwaitingStartState -= RestoreLives;
+        }
+        private void RestoreLives()
+        {
             _currentLives = maxLives;
+            _uiManager.SetLives(_currentLives);
         }
         public void InitializeGame(int totalBrickCount)
         {
@@ -68,7 +81,6 @@ namespace RitimUS.BrickBreaker.Managers
                 _currentLives--;
                 _uiManager.SetLives(_currentLives);
                 GameStateHandler.ChangeState(GameState.NewLifeStarted);
-                Debug.Log("live lost, current live = " + _currentLives);
             }
         }
         private void CheckIfWon()
