@@ -22,7 +22,6 @@ namespace RitimUS.BrickBreaker
             ColorType = newColor;
             _spriteRenderer.color = ColorType;
         }
-
         public void HitAction(Color hitColor)
         {
             switch (GameManager.Instance.MainGameMode)
@@ -53,7 +52,6 @@ namespace RitimUS.BrickBreaker
             GameManager.Instance.SpawnParticle(GameManager.Instance.BrickBreakParticle, transform.position);
             Destroy(gameObject);
         }
-
     }
     public interface IBrickHit
     {

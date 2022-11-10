@@ -143,7 +143,6 @@ namespace RitimUS.BrickBreaker.Managers
         {
             Application.Quit();
         }
-
     }
     public enum GameMode { BallChange = 0, BrickChange = 1}
 }
