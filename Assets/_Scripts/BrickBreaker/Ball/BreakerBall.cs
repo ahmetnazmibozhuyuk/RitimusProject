@@ -117,7 +117,7 @@ namespace RitimUS.BrickBreaker
                 }
             }
         }
-        public void HitAction(Vector3 direction)
+        public void PaddleHitAction(Vector3 direction)
         {
             _rigidbody.velocity = direction;
         }

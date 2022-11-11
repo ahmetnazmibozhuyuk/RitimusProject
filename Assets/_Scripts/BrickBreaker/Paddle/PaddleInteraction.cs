@@ -11,19 +11,19 @@ namespace RitimUS.BrickBreaker
             if (collision.gameObject.GetComponent<IPaddleHit>() == null) return;
 
             IPaddleHit paddleHit = collision.gameObject.GetComponent<IPaddleHit>();
-            paddleHit.HitAction((transform.position-collision.transform.position).normalized*paddleBounceBackMultiplier);
+            paddleHit.PaddleHitAction((transform.position-collision.transform.position).normalized*paddleBounceBackMultiplier);
         }
         private void OnTriggerEnter(Collider other)
         {
             if (other.gameObject.GetComponent<IPaddleHit>() == null) return;
 
             IPaddleHit paddleHit = other.gameObject.GetComponent<IPaddleHit>();
-            paddleHit.HitAction((transform.position - other.transform.position).normalized * paddleBounceBackMultiplier);
+            paddleHit.PaddleHitAction((transform.position - other.transform.position).normalized * paddleBounceBackMultiplier);
         }
     }
 
     public interface IPaddleHit
     {
-        public void HitAction(Vector3 direction);
+        public void PaddleHitAction(Vector3 direction);
     }
 }
