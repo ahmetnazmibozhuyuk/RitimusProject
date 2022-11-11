@@ -23,7 +23,6 @@ namespace RitimUS.BrickBreaker
             SetTouchControl();
 
 #if UNITY_EDITOR
-            //SetControl();
             SetKeyboardControl();
 #endif
         }
@@ -54,23 +53,6 @@ namespace RitimUS.BrickBreaker
             }
         }
 #if UNITY_EDITOR
-        private void SetControl()
-        {
-            if (Input.GetMouseButtonDown(0))
-            {
-                StartGame();
-                _hitDownPositionx = Input.mousePosition.x;
-            }
-            else if (Input.GetMouseButton(0))
-            {
-                _offsetx = Input.mousePosition.x - _hitDownPositionx;
-                _hitDownPositionx = Input.mousePosition.x;
-            }
-            else if (Input.GetMouseButtonUp(0))
-            {
-                _offsetx = 0;
-            }
-        }
         private void SetKeyboardControl()
         {
             if (_leftInput)

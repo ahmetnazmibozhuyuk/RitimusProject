@@ -15,7 +15,7 @@ namespace RitimUS.UI
         }
         private void OnEnable()
         {
-            _popTween = transform.DOScale(enlargedSize, 0.5f).SetEase(Ease.OutBounce);
+            _popTween = transform.DOScale(enlargedSize, openDelay).SetEase(Ease.OutBounce);
         }
         private void OnDisable()
         {
