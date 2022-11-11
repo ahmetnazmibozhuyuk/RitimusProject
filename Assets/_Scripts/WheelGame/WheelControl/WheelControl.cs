@@ -22,7 +22,7 @@ namespace RitimUS.WheelGame.Wheel
         }
         private void InitializeAngles()
         {
-            _angleLimits = new AngleLimit[GameManager.Instance.RewardCount];
+            _angleLimits = new AngleLimit[_segmentCount];
             for (int i = 0; i < _angleLimits.Length; i++)
             {
                 _angleLimits[i].minimumAngle = ((360 / _segmentCount) * i + _startAngle) % 360 - 1;
