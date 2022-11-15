@@ -44,7 +44,7 @@ namespace RitimUS.BrickBreaker
             }
             else if (touch.phase == TouchPhase.Moved)
             {
-                _offsetx = touch.position.x - _hitDownPositionx;
+                _offsetx = (touch.position.x - _hitDownPositionx)*500/Screen.width;
                 _hitDownPositionx = touch.position.x;
             }
             else if (touch.phase == TouchPhase.Ended)
